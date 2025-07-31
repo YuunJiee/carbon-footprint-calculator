@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>碳足跡計算機</title>
+    <title>碳排放計算機</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
         </div>
 
         <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900" data-lang-key="mainTitle">AI 運算碳足跡計算機</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900" data-lang-key="mainTitle">碳排放計算機</h1>
             <p class="mt-3 text-md md:text-lg text-gray-600" data-lang-key="subTitle">根據您提供的硬體與使用參數，估算運算過程產生的碳排放量。</p>
         </header>
 
@@ -61,7 +61,7 @@
                             <div>
                                 <label for="psf" class="block text-sm font-medium text-gray-600" data-lang-key="psf">務實擴展因子 (PSF)</label>
                                 <input type="number" id="psf" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                <p class="text-xs text-gray-500 mt-1" data-lang-key="psfDesc">估算演算法重複執行的次數</p>
+                                <p class="text-xs text-gray-500 mt-1" data-lang-key="psfDescShort">估算演算法重複執行的次數</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5 mt-5">
@@ -96,6 +96,29 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="mt-10 pt-6 border-t border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-lang-key="glossaryTitle">名詞解釋</h3>
+                    <div class="space-y-4 text-sm text-gray-600">
+                        <div>
+                            <h4 class="font-semibold text-gray-800" data-lang-key="tdpTitle">1. 什麼是 TDP (熱設計功耗)？</h4>
+                            <p data-lang-key="tdpDesc">TDP (Thermal Design Power) 是處理器（CPU/GPU）在最大負載下所產生的熱量，單位為瓦 (W)。它通常被用來近似估算處理器的最大功耗。此處的 TDP 是指單一核心或單一 GPU 的功耗。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800" data-lang-key="psfTitle">2. 什麼是 PSF (務實擴展因子)？</h4>
+                            <p data-lang-key="psfDesc">PSF (Pragmatic Scaling Factor) 是一個乘數，用來估算在實際研究中，一個演算法因除錯、參數調整、重複實驗等原因而需要執行的總次數。例如，若一個模型最終需要訓練 1 次，但在過程中您跑了 10 次來找最佳參數，PSF 就會是 10。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800" data-lang-key="usageTitle">3. 如何取得「使用率」？</h4>
+                            <p data-lang-key="usageDesc">您可以透過系統的監控工具來取得。在 Windows 中是「工作管理員」的效能分頁；在 macOS 中是「活動監視器」；在 Linux 中則可以使用 `top` 或 `htop` 指令。請在運算任務執行時，觀察 CPU 或 GPU 的平均使用率。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800" data-lang-key="conversionTitle">4. 換算單位說明</h4>
+                            <p data-lang-key="conversionDesc">右側的換算指標（如衛生紙、瓶裝水、啤酒等）皆是指「生產一個單位」所產生的碳排量。</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="lg:col-span-2">
@@ -127,26 +150,28 @@
 
             const TRANSLATIONS = {
                 en: {
-                    mainTitle: "Carbon Footprint Calculator", subTitle: "Estimate carbon emissions based on hardware and usage parameters.", formTitle: "Input Parameters", sectionHardware: "1. Hardware Specifications", cpuCores: "CPU Cores", cpuTdp: "CPU TDP (W/core)", gpuCount: "Number of GPUs", gpuTdp: "GPU TDP (W/GPU)", memoryGb: "Memory (GB)", sectionUsage: "2. Usage Profile", runtimeHours: "Runtime (Hours)", cpuUsage: "CPU Utilization", gpuUsage: "GPU Utilization", sectionInfra: "3. Infrastructure", pue: "Power Usage Effectiveness (PUE)", location: "Data Center Location", locationName: "Taiwan", resultsTitle: "Calculation Results", waiting: "Awaiting Calculation", waitingInvalid: "Please enter valid parameters to calculate.", totalFootprint: "Total Carbon Footprint", kgCO2e: "kg CO₂e", equivalentTo: "Equivalent to", treeMonths: "tree-months of carbon sequestration", analysisTitle: "Emission Source Analysis", cpu: "CPU", gpu: "GPU", memory: "Memory",
+                    mainTitle: "Carbon Emissions Calculator", subTitle: "Estimate carbon emissions based on hardware and usage parameters.", formTitle: "Input Parameters", sectionHardware: "1. Hardware Specifications", cpuCores: "CPU Cores", cpuTdp: "CPU TDP (W/core)", gpuCount: "Number of GPUs", gpuTdp: "GPU TDP (W/GPU)", memoryGb: "Memory (GB)", sectionUsage: "2. Usage Profile", runtimeHours: "Runtime (Hours)", cpuUsage: "CPU Utilization", gpuUsage: "GPU Utilization", sectionInfra: "3. Infrastructure", pue: "Power Usage Effectiveness (PUE)", location: "Data Center Location", locationName: "Taiwan", resultsTitle: "Calculation Results", waiting: "Awaiting Calculation", waitingInvalid: "Please enter valid parameters to calculate.", totalEmissions: "Total Carbon Emissions", kgCO2e: "kg CO₂e", equivalentTo: "Equivalent to", treeMonths: "tree-months of carbon sequestration", analysisTitle: "Emission Source Analysis", cpu: "CPU", gpu: "GPU", memory: "Memory",
                     apiStatusLoading: "Fetching real-time data...", apiStatusSuccess: "Using real-time data for {zone}", apiStatusError: "Error fetching data, using global average.", ciDisplay: "({value} gCO₂e/kWh)",
                     equivalentToHSR: "HSR travel of", hsrKm: "km on a Taiwan High Speed Rail",
-                    psf: "Pragmatic Scaling Factor (PSF)", psfDesc: "Number of times the algorithm is run in practice",
+                    psf: "Pragmatic Scaling Factor (PSF)", psfDescShort: "Number of times the algorithm is run in practice",
                     toiletPaperRolls: "rolls of toilet paper",
                     bottledWater: "600ml bottles of water",
                     busKm: "km on a Taiwan city bus",
                     taiwanBeer: "cans of Taiwan Beer",
-                    locationTaiwanAuto: "Taiwan (Auto)", locationOtherManual: "Other (Manual)", manualCiInputLabel: "Manual Carbon Intensity (gCO₂e/kWh)", manualCiInputDesc: "Please find and enter the value from {link}."
+                    locationTaiwanAuto: "Taiwan (Auto)", locationOtherManual: "Other (Manual)", manualCiInputLabel: "Manual Carbon Intensity (gCO₂e/kWh)", manualCiInputDesc: "Please find and enter the value from {link}.",
+                    glossaryTitle: "Glossary", tdpTitle: "1. What is TDP (Thermal Design Power)?", tdpDesc: "TDP is the maximum amount of heat generated by a processor (CPU/GPU) under a heavy workload, measured in Watts (W). It's often used as a proxy for maximum power consumption. The TDP here refers to the power of a single core or a single GPU.", psfTitle: "2. What is PSF (Pragmatic Scaling Factor)?", psfDesc: "PSF is a multiplier used to estimate the total number of times an algorithm is run in practice due to debugging, parameter tuning, repeated experiments, etc. For example, if a model is trained once for the final result but was run 10 times to find the best parameters, the PSF would be 10.", usageTitle: "3. How to get the 'Utilization'?", usageDesc: "You can get this from your system's monitoring tools. In Windows, it's the Performance tab in Task Manager; in macOS, it's the Activity Monitor; in Linux, you can use commands like `top` or `htop`. Observe the average CPU or GPU utilization while your task is running.", conversionTitle: "4. Conversion Unit Clarification", conversionDesc: "The conversion metrics on the right (e.g., toilet paper, bottled water, beer) all refer to the carbon emissions generated from producing a single unit of that item."
                 },
                 zh: {
-                    mainTitle: "碳足跡計算機", subTitle: "根據您提供的硬體與使用參數，估算運算過程產生的碳排放量。", formTitle: "輸入參數", sectionHardware: "1. 硬體規格", cpuCores: "CPU 核心數", cpuTdp: "CPU TDP (W/核心)", gpuCount: "GPU 數量", gpuTdp: "GPU TDP (W/GPU)", memoryGb: "記憶體 (GB)", sectionUsage: "2. 使用情況", runtimeHours: "運算時間 (小時)", cpuUsage: "CPU 使用率", gpuUsage: "GPU 使用率", sectionInfra: "3. 基礎設施", pue: "電力使用效率 (PUE)", location: "資料中心地點", locationName: "台灣", resultsTitle: "計算結果", waiting: "等待計算", waitingInvalid: "請輸入有效參數以計算碳足跡。", totalFootprint: "總碳足跡", kgCO2e: "公斤 CO₂e", equivalentTo: "相當於", treeMonths: "棵樹一個月的碳吸收量", analysisTitle: "排放來源分析", cpu: "CPU", gpu: "GPU", memory: "記憶體",
+                    mainTitle: "碳排放計算機", subTitle: "根據您提供的硬體與使用參數，估算運算過程產生的碳排放量。", formTitle: "輸入參數", sectionHardware: "1. 硬體規格", cpuCores: "CPU 核心數", cpuTdp: "CPU TDP (W/核心)", gpuCount: "GPU 數量", gpuTdp: "GPU TDP (W/GPU)", memoryGb: "記憶體 (GB)", sectionUsage: "2. 使用情況", runtimeHours: "運算時間 (小時)", cpuUsage: "CPU 使用率", gpuUsage: "GPU 使用率", sectionInfra: "3. 基礎設施", pue: "電力使用效率 (PUE)", location: "資料中心地點", locationName: "台灣", resultsTitle: "計算結果", waiting: "等待計算", waitingInvalid: "請輸入有效參數以計算碳排放。", totalEmissions: "總碳排放", kgCO2e: "公斤 CO₂e", equivalentTo: "相當於", treeMonths: "棵樹一個月的碳吸收量", analysisTitle: "排放來源分析", cpu: "CPU", gpu: "GPU", memory: "記憶體",
                     apiStatusLoading: "正在擷取即時數據...", apiStatusSuccess: "使用 {zone} 的即時數據", apiStatusError: "數據擷取錯誤，使用全球平均值", ciDisplay: "({value} gCO₂e/kWh)",
                     equivalentToHSR: "搭乘高鐵", hsrKm: "公里(高鐵)",
-                    psf: "務實擴展因子 (PSF)", psfDesc: "估算演算法重複執行的次數",
+                    psf: "務實擴展因子 (PSF)", psfDescShort: "估算演算法重複執行的次數",
                     toiletPaperRolls: "捲衛生紙",
                     bottledWater: "瓶水(600ml)",
                     busKm: "公里(公車)",
                     taiwanBeer: "罐啤酒(330ml)",
-                    locationTaiwanAuto: "台灣 (自動)", locationOtherManual: "其他 (手動)", manualCiInputLabel: "手動輸入碳強度 (gCO₂e/kWh)", manualCiInputDesc: "請至 {link} 查詢並輸入數值。"
+                    locationTaiwanAuto: "台灣 (自動)", locationOtherManual: "其他 (手動)", manualCiInputLabel: "手動輸入碳強度 (gCO₂e/kWh)", manualCiInputDesc: "請至 {link} 查詢並輸入數值。",
+                    glossaryTitle: "名詞解釋", tdpTitle: "1. 什麼是 TDP (熱設計功耗)？", tdpDesc: "TDP (Thermal Design Power) 是處理器（CPU/GPU）在最大負載下所產生的熱量，單位為瓦 (W)。它通常被用來近似估算處理器的最大功耗。此處的 TDP 是指單一核心或單一 GPU 的功耗。", psfTitle: "2. 什麼是 PSF (務實擴展因子)？", psfDesc: "PSF (Pragmatic Scaling Factor) 是一個乘數，用來估算在實際研究中，一個演算法因除錯、參數調整、重複實驗等原因而需要執行的總次數。例如，若一個模型最終需要訓練 1 次，但在過程中您跑了 10 次來找最佳參數，PSF 就會是 10。", usageTitle: "3. 如何取得「使用率」？", usageDesc: "您可以透過系統的監控工具來取得。在 Windows 中是「工作管理員」的效能分頁；在 macOS 中是「活動監視器」；在 Linux 中則可以使用 `top` 或 `htop` 指令。請在運算任務執行時，觀察 CPU 或 GPU 的平均使用率。", conversionTitle: "4. 換算單位說明", conversionDesc: "右側的換算指標（如衛生紙、瓶裝水、啤酒等）皆是指「生產一個單位」所產生的碳排量。"
                 }
             };
 
@@ -209,7 +234,7 @@
                 };
             }
 
-            function calculateFootprint(inputs, carbonIntensity) {
+            function calculateEmissions(inputs, carbonIntensity) {
                 const { runtime, cpuPower, gpuPower, cpuUsage, gpuUsage, memory, PUE, PSF } = inputs;
                 
                 const powerCores = (cpuPower * cpuUsage) + (gpuPower * gpuUsage);
@@ -253,7 +278,7 @@
                 }
 
                 const formInputs = getFormInputs();
-                const results = calculateFootprint(formInputs, ciToUse);
+                const results = calculateEmissions(formInputs, ciToUse);
                 renderResults(results);
                 updateCiDisplay(locationMode === 'taiwan' ? state.carbonIntensity : null);
             }
@@ -266,7 +291,7 @@
                     return;
                 }
                 DOMElements.resultsContent.innerHTML = `
-                    <div class="result-card text-center p-6 bg-indigo-50 rounded-lg border border-indigo-200"><p class="text-sm font-medium text-indigo-600">${T.totalFootprint}</p><p class="text-4xl font-bold text-indigo-900 my-1">${data.totalCarbonKg.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p><p class="text-lg text-indigo-800">${T.kgCO2e}</p></div>
+                    <div class="result-card text-center p-6 bg-indigo-50 rounded-lg border border-indigo-200"><p class="text-sm font-medium text-indigo-600">${T.totalEmissions}</p><p class="text-4xl font-bold text-indigo-900 my-1">${data.totalCarbonKg.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p><p class="text-lg text-indigo-800">${T.kgCO2e}</p></div>
                     
                     <div class="mt-4 text-center">
                         <p class="text-sm font-medium text-gray-500">${T.equivalentTo}:</p>
